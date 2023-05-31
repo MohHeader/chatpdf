@@ -5,16 +5,16 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.vectorstores import FAISS
 
 from langchain.chains import ConversationalRetrievalChain
-from langchain.llms import OpenAI
+from langchain.chat_models import ChatOpenAI
 
 
 class Agent:
-    def __init__(self, openai_api_key: str | None = None) -> None:
+    def __init__(self, openai_api_key: Optional[str] = None) -> None:
         # if openai_api_key is None, then it will look the enviroment variable OPENAI_API_KEY
         self.embeddings = OpenAIEmbeddings(openai_api_key=openai_api_key)
         self.text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
 
-        self.llm = OpenAI(temperature=0, openai_api_key=openai_api_key)
+        self.llm = ChatOpenAI(temperature=0, openai_api_key=openai_api_key)
 
         self.chat_history = None
         self.chain = None
